@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:mem:testdb;NON_KEYWORDS=USER
+    username: sa
+
+logging.level:
+  org.hibernate.SQL: info # JPA에서 발생하는 쿼리문을 로그파일로 보여주는 옵션.
+  org.hibernate.type:
+    descriptor.sql: trace # SQL 문에서 바인딩 되는 파라미터 값까지 보여주는 옵션
