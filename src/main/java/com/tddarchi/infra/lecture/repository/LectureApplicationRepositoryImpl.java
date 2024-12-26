@@ -13,13 +13,13 @@ public class LectureApplicationRepositoryImpl implements ILectureApplicationRepo
     private final LectureApplicationJpaRepository jpaRepository;
 
     @Override
-    public LectureApplication findByLectureIdAndUserId(LectureApplication application) {
-        return jpaRepository.findByLectureIdAndUserId(application.getLectureId(), application.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("LectureApplication not found"));
+    public LectureApplication findByLectureIdAndUserId(Long lectureId, Long userId) {
+        return jpaRepository.findByLectureIdAndUserId(lectureId, userId)
+                .orElse(null);
     }
 
     @Override
-    public int countByLectureId(long lectureId) {
+    public int countByLectureId(Long lectureId) {
         return jpaRepository.countByLectureId(lectureId);
     }
 

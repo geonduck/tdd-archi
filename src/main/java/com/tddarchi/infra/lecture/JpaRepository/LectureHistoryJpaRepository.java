@@ -1,6 +1,7 @@
 package com.tddarchi.infra.lecture.JpaRepository;
 
 import com.tddarchi.domain.lecture.entity.LectureHistory;
+import com.tddarchi.domain.lecture.enums.LectureStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface LectureHistoryJpaRepository extends JpaRepository<LectureHistor
     Optional<LectureHistory> findByLectureIdAndUserId(Long lectureId, Long userId);
 
     List<LectureHistory> findByLectureId(Long lectureId);
+
+    List<LectureHistory> findByUserIdAndStatus(Long userId, LectureStatus status);
+
 }

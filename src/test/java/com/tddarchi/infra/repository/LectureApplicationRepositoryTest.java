@@ -29,9 +29,7 @@ class LectureApplicationRepositoryTest {
 
         lectureApplicationRepository.save(application);
         // when
-        LectureApplication foundApplication = lectureApplicationRepository.findByLectureIdAndUserId(LectureApplication.builder()
-                .lectureId(1L)
-                .userId(1L).build());
+        LectureApplication foundApplication = lectureApplicationRepository.findByLectureIdAndUserId(1L, 1L);
 
         // then
         assertThat(foundApplication.getAppliedAt()).isEqualTo(LocalDateTime.of(2024, 12, 25, 15, 30));
@@ -68,7 +66,7 @@ class LectureApplicationRepositoryTest {
         lectureApplicationRepository.save(newApplication);
 
         // when
-        LectureApplication savedApplication = lectureApplicationRepository.findByLectureIdAndUserId(newApplication);
+        LectureApplication savedApplication = lectureApplicationRepository.findByLectureIdAndUserId(1L, 1L);
 
         // then
         assertThat(savedApplication).isNotNull();

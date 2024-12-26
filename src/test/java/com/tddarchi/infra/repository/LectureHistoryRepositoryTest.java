@@ -41,7 +41,7 @@ public class LectureHistoryRepositoryTest {
         lectureHistoryRepository.save(expectedHistory);
 
         // then
-        LectureHistory savedHistory = lectureHistoryRepository.findByLectureIdAndUserId(expectedHistory);
+        LectureHistory savedHistory = lectureHistoryRepository.findByLectureIdAndUserId(expectedHistory.getLectureId(), expectedHistory.getUserId());
 
         assertThat(savedHistory).isNotNull();
         assertThat(savedHistory.getLectureName()).isEqualTo("Test Lecture");
@@ -73,7 +73,7 @@ public class LectureHistoryRepositoryTest {
         lectureHistoryRepository.save(expectedHistory);
 
         // then
-        List<LectureHistory> savedHistory = lectureHistoryRepository.findByLectureId(expectedHistory);
+        List<LectureHistory> savedHistory = lectureHistoryRepository.findByLectureId(expectedHistory.getLectureId());
 
         assertThat(savedHistory).isNotNull();
         assertThat(savedHistory.get(0).getLectureName()).isEqualTo("Test Lecture");

@@ -6,6 +6,9 @@ import com.tddarchi.infra.lecture.JpaRepository.LectureJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -16,11 +19,17 @@ public class LectureRepositoryImpl implements ILectureRepository {
     @Override
     public Lecture findById(long id) {
         return jpaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Lecture not found"));
+                .orElse(null);
     }
 
     @Override
-    public void save(Lecture lecture) {
+    public Lecture save(Lecture lecture) {
         jpaRepository.save(lecture);
+        return lecture;
+    }
+
+    @Override
+    public List<Lecture> findLecturesByDate(LocalDateTime searchDate) {
+        return jpaRepository.findLecturesByDate(searchDate);
     }
 }

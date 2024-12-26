@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface LectureApplicationJpaRepository extends JpaRepository<LectureApplication, Long> {
     Optional<LectureApplication> findByLectureIdAndUserId(Long lectureId, Long userId);
-    int countByLectureId(long lectureId);
+    int countByLectureId(Long lectureId);
 }
