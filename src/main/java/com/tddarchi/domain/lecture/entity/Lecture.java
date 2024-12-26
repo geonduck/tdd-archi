@@ -25,4 +25,6 @@ public class Lecture extends BaseTimeEntity {
     private LocalDateTime enrollmentStart; // 수강 신청 시작일
     private LocalDateTime enrollmentEnd;   // 수강 신청 마감일
     private LocalDateTime lectureStart;    // 강의 시작일
+
+
 }
