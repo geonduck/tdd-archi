@@ -26,7 +26,6 @@ public class LectureHistory extends BaseTimeEntity {
     private String lectureName;   // 강의명
     private String lecturerInfo;  // 강연자 정보
 
-    private LocalDateTime recordedAt;  // 기록 시간
 }
 
 

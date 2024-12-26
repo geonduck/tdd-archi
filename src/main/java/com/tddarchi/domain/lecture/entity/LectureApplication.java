@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"lecture_id", "user_id"})
+})
 public class LectureApplication extends BaseTimeEntity {
 
     @Id
@@ -20,8 +23,6 @@ public class LectureApplication extends BaseTimeEntity {
 
     private Long lectureId;  // 강의 참조 ID
     private Long userId;     // 사용자 참조 ID
-
-    private LocalDateTime appliedAt;   // 신청 시간
 
 }
 

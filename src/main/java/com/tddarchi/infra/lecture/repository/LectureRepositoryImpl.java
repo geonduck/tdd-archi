@@ -32,4 +32,9 @@ public class LectureRepositoryImpl implements ILectureRepository {
     public List<Lecture> findLecturesByDate(LocalDateTime searchDate) {
         return jpaRepository.findLecturesByDate(searchDate);
     }
+
+    @Override
+    public Lecture findByIdWithPessimisticLock(Long lectureId) {
+        return jpaRepository.findByIdWithPessimisticLock(lectureId);
+    }
 }

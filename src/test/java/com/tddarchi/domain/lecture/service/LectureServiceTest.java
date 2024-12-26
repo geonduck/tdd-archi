@@ -1,5 +1,6 @@
 package com.tddarchi.domain.lecture.service;
 
+import com.tddarchi.domain.lecture.dto.LectureResult;
 import com.tddarchi.domain.lecture.entity.Lecture;
 import com.tddarchi.domain.lecture.entity.LectureApplication;
 import com.tddarchi.domain.lecture.entity.LectureHistory;
@@ -54,11 +55,11 @@ class LectureServiceTest {
         @DisplayName("수강신청 성공")
         void applyLecture_ShouldSucceed_WhenValidRequest() {
             // when
-            Lecture result = lectureService.applyLecture(lecture.getId(), USER_ID);
+            LectureResult result = lectureService.applyLecture(lecture.getId(), USER_ID);
 
             // then
             assertThat(result).isNotNull();
-            assertThat(result.getId()).isEqualTo(lecture.getId());
+            assertThat(result.getLectureId()).isEqualTo(lecture.getId());
 
             // 신청 이력 확인
             List<LectureHistory> histories = lectureService.findUserLectureHistories(USER_ID, LectureStatus.SUCCESS);
