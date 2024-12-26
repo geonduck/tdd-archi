@@ -37,4 +37,9 @@ public class LectureRepositoryImpl implements ILectureRepository {
     public Lecture findByIdWithPessimisticLock(Long lectureId) {
         return jpaRepository.findByIdWithPessimisticLock(lectureId);
     }
+
+    @Override
+    public List<Lecture> findAll() {
+        return jpaRepository.findAll();
+    }
 }

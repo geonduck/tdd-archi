@@ -14,4 +14,6 @@ public interface ILectureRepository {
     List<Lecture> findLecturesByDate(LocalDateTime searchDate);
 
     Lecture findByIdWithPessimisticLock(Long lectureId);
+
+    List<Lecture> findAll();
 }

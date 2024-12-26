@@ -1,6 +1,7 @@
 package com.tddarchi.domain.lecture.service;
 
 import com.tddarchi.domain.lecture.entity.Lecture;
+import com.tddarchi.domain.lecture.repository.ILectureRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ class LectureConcurrentIntegrationTest {
 
     @Autowired
     private LectureService lectureService;
+
+    @Autowired
+    private ILectureRepository lectureRepository;
 
     @Test
     @DisplayName("40명 동시 신청 시 정확히 30명만 성공")
@@ -50,6 +54,35 @@ class LectureConcurrentIntegrationTest {
                 () -> assertThat(successCount.get()).isEqualTo(maxParticipants),
                 () -> assertThat(failCount.get()).isEqualTo(concurrentUsers - maxParticipants),
                 () -> assertThat(lectureService.getParticipantCount(lecture.getId())).isEqualTo(maxParticipants)
+        );
+    }
+
+    @Test
+    @DisplayName("동일한 유저가 같은 특강을 5번 신청했을 때, 1번만 성공")
+    void applyLecture_ShouldReturnConflict_WhenUserAppliesMultipleTimes() {
+        Long lectureId = lectureRepository.findAll().get(0).getId();
+        Long userId = 1L;
+
+        AtomicInteger successCount = new AtomicInteger(0);
+        AtomicInteger failCount = new AtomicInteger(0);
+
+        List<CompletableFuture<Void>> futures = IntStream.range(0, 5)
+                .mapToObj(i -> CompletableFuture.runAsync(() -> {
+                    try {
+                        lectureService.applyLecture(lectureId, userId);
+                        successCount.incrementAndGet();
+                    } catch (Exception e) {
+                        failCount.incrementAndGet();
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .join();
+
+        assertAll(
+                () -> assertThat(successCount.get()).isEqualTo(1),
+                () -> assertThat(failCount.get()).isEqualTo(4)
         );
     }
 
