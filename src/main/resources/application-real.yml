@@ -1,0 +1,17 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306
+    username: root
+    password: 1234
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging.level:
+  org.hibernate.SQL: debug # JPA에서 발생하는 쿼리문을 로그파일로 보여주는 옵션.
+  org.hibernate.type:
+    descriptor.sql: trace # SQL 문에서 바인딩 되는 파라미터 값까지 보여주는 옵션
