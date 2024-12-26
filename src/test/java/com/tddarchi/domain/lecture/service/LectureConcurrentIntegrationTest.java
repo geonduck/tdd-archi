@@ -53,6 +53,28 @@ class LectureConcurrentIntegrationTest {
         );
     }
 
+    @Test
+    @DisplayName("데이터 일관성 검증")
+    void should_maintain_data_consistency_under_concurrent_requests() {
+        int maxParticipants = 30;
+        int concurrentUsers = 40;
+        Lecture lecture = createTestLecture(maxParticipants);
+
+        List<CompletableFuture<Void>> futures = IntStream.range(0, concurrentUsers)
+                .mapToObj(i -> CompletableFuture.runAsync(() -> {
+                    try {
+                        lectureService.applyLecture(lecture.getId(), (long) (i + 1));
+                    } catch (Exception ignored) {
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .join();
+
+        assertThat(lectureService.getParticipantCount(lecture.getId())).isEqualTo(maxParticipants);
+    }
+
     private Lecture createTestLecture(int maxParticipants) {
         return lectureService.saveLecture(Lecture.builder()
                 .lectureName("Test Lecture")
